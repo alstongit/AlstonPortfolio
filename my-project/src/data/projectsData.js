@@ -2,6 +2,7 @@
 import legaleaseImg from "./imgs/legalEase.png";
 import contestTrackerImg from "./imgs/contest.png";
 import portfolioImg from "./imgs/portfolio.png";
+import geosentinelImg from "./imgs/geoSentinel.png";
 
 export const projectsData = [
   {
@@ -19,10 +20,10 @@ export const projectsData = [
     
   },
   {
-    title: "Personal Portfolio",
-    url: "https://github.com/alstongit/AlstonPortfolio",
-    tech: ["React", "GSAP", "Tailwind CSS"],
-    image: portfolioImg,
+    title: "GeoSentinel",
+    url: "https://geo-sentinel.vercel.app/",
+    tech: ["React", "FastAPI", "Tailwind CSS", "ML"],
+    image: geosentinelImg,
     
   },
 ];
