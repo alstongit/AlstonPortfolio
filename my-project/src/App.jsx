@@ -1,18 +1,20 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { AuroraBackground } from "./components/ui/aurora-background";
+import Hero from "./components/sections/Hero";
+import Projects from "./components/sections/Projects";
+import TechStack from "./components/sections/TechStack";
+import Contact from './components/sections/Contact';    
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <>
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-    </>
-  )
+    <AuroraBackground>
+      <div className="flex flex-col w-full">
+        <Hero />
+        <Projects />
+        <TechStack />
+        <Contact />
+      </div>
+    </AuroraBackground>
+  );
 }
 
-export default App
