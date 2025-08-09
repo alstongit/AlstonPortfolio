@@ -10,8 +10,15 @@ export default function Projects() {
   const sectionRef = useRef(null);
 
   useLayoutEffect(() => {
-    if (isMobile() || prefersReducedMotion() || isLowEndDevice()) return;
-    // (lazy gsap import)
+    if (isMobile() || prefersReducedMotion() || isLowEndDevice()) {
+      // Ensure cards are visible when animations are disabled
+      const cards = document.querySelectorAll(".project-card");
+      cards.forEach((card) => {
+        card.style.opacity = "1";
+      });
+      return;
+    }
+
     let ctx;
     (async () => {
       const { default: gsap } = await import("gsap");
@@ -19,10 +26,15 @@ export default function Projects() {
       gsap.registerPlugin(ScrollTrigger);
       ctx = gsap.context(() => {
         const cards = gsap.utils.toArray(".project-card");
-        gsap.from(cards, {
-          opacity: 0,
-          y: 60,
-          rotateX: 15,
+
+        // Set initial state explicitly
+        gsap.set(cards, { opacity: 0, y: 60, rotateX: 15 });
+
+        gsap.to(cards, {
+          // Changed from 'from' to 'to' for better control
+          opacity: 1, // Make sure this animates to full opacity
+          y: 0,
+          rotateX: 0,
           transformOrigin: "top center",
           duration: 0.8,
           ease: "power3.out",
@@ -68,7 +80,7 @@ export default function Projects() {
             {projectsData.map((project, index) => (
               <CometCard
                 key={index}
-                className="project-card rounded-xl h-[380px] flex flex-col justify-between max-w-sm mx-auto w-full overflow-hidden"
+                className="project-card rounded-xl h-[380px] flex flex-col justify-between max-w-sm mx-auto w-full overflow-hidden opacity-100" // Added opacity-100
               >
                 {/* Image */}
                 <div className="h-48 w-full">
@@ -111,7 +123,7 @@ export default function Projects() {
                     {project.tech.map((tech, i) => (
                       <span
                         key={i}
-                        className="px-3 py-1 bg-gray-800/80 backdrop-blur-sm rounded-full text-sm text-gray-300"
+                        className="px-3 py-1 bg-gray-800 rounded-full text-sm text-gray-300" // Removed backdrop-blur and increased opacity
                       >
                         {tech}
                       </span>

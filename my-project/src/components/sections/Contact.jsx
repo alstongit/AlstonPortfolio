@@ -56,7 +56,7 @@ const Contact = () => {
       {/* Blue line (always rendered, GSAP animates) */}
       <div
         ref={lineRef}
-        className="contact-line h-1 bg-blue-500 mb-6 w-48"
+        className="contact-line h-1 bg-blue-500 mb-6 w-62"
       />
 
       {/* Intro Text */}
