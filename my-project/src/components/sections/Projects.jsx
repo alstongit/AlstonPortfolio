@@ -3,9 +3,10 @@ import { CometCard } from "@/components/ui/comet-card";
 import { projectsData } from "@/data/projectsData";
 import { ExternalLink } from "lucide-react";
 import { LampGlow } from "@/components/ui/lamp"; // added
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { isMobile, prefersReducedMotion } from "@/lib/device";
 
 export default function Projects() {
   const sectionRef = useRef(null);
@@ -30,6 +31,12 @@ export default function Projects() {
     }, sectionRef);
     return () => ctx.revert();
   }, []);
+
+  useEffect(() => {
+    if (isMobile() || prefersReducedMotion()) return; // skip heavy hover math
+    // init tilt (your existing useCardTilt or logic)
+  }, []);
+
   return (
     <section ref={sectionRef} className="text-white py-20 px-4">
       {/* Section Header */}

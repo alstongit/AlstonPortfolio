@@ -1,8 +1,8 @@
 // src/data/projectsData.js
-import legaleaseImg from "./imgs/legalEase.png";
-import contestTrackerImg from "./imgs/contest.png";
-import portfolioImg from "./imgs/portfolio.png";
-import geosentinelImg from "./imgs/geoSentinel.png";
+import legaleaseImg from "./imgs/legalEase.webp";
+import contestTrackerImg from "./imgs/contest.webp";
+//import portfolioImg from "./imgs/portfolio.png";
+import geosentinelImg from "./imgs/geosentinel.webp";
 
 export const projectsData = [
   {

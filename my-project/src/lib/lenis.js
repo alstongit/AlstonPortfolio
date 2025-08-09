@@ -1,18 +1,21 @@
 import Lenis from "@studio-freight/lenis";
+import { isMobile, prefersReducedMotion } from "./device";
 
-export const lenis = new Lenis({
-  duration: 1.15, // adjust feel
-  easing: (t) => 1 - Math.pow(1 - t, 3),
-  smoothWheel: true,
-  smoothTouch: false,
-});
+const disable = isMobile() || prefersReducedMotion();
 
-// RequestAnimationFrame loop
-function raf(time) {
-  lenis.raf(time);
+export const lenis = disable
+  ? null
+  : new Lenis({
+      duration: 1.1,
+      easing: t => 1 - Math.pow(1 - t, 3),
+      smoothWheel: true,
+      smoothTouch: false,
+    });
+
+if (lenis) {
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
   requestAnimationFrame(raf);
 }
-requestAnimationFrame(raf);
-
-// Optional debug
-// window.lenis = lenis;

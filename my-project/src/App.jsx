@@ -1,18 +1,22 @@
-import './App.css'
+import './App.css';
 import { AuroraBackground } from "./components/ui/aurora-background";
 import Hero from "./components/sections/Hero";
-import Projects from "./components/sections/Projects";
-import TechStack from "./components/sections/TechStack";
-import Contact from './components/sections/Contact';    
+import { Suspense, lazy } from "react";
+
+const Projects = lazy(() => import("./components/sections/Projects"));
+const TechStack = lazy(() => import("./components/sections/TechStack"));
+const Contact = lazy(() => import("./components/sections/Contact"));
 
 export default function App() {
   return (
     <AuroraBackground>
       <div className="flex flex-col w-full">
         <Hero />
-        <Projects />
-        <TechStack />
-        <Contact />
+        <Suspense fallback={<div className="py-24 text-center text-gray-400">Loading…</div>}>
+          <Projects />
+          <TechStack />
+          <Contact />
+        </Suspense>
       </div>
     </AuroraBackground>
   );

@@ -1,15 +1,16 @@
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 import profilePic from "@/assets/profile.jpg";
-import resumePdf from "@/assets/AlstonResumeUpdated.pdf";
 import { useEffect, useState, useRef } from "react";
 import { lenis } from "@/lib/lenis";
 import gsap from "gsap";
 import { useLayoutEffect } from "react";
+import { isMobile, prefersReducedMotion } from "@/lib/device";
 
 export default function Hero() {
   const heroRef = useRef(null);
   const layers = useRef([]);
+  const ctaRef = useRef(null);
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const q = gsap.utils.selector(heroRef);
@@ -85,27 +86,23 @@ export default function Hero() {
         />
       </div>
 
-      <div className="flex gap-4">
+      <div ref={ctaRef} className="flex gap-4">
         <a
-          href={resumePdf}
-          download="Alston_Dsouza_Resume.pdf"
+          href="https://drive.google.com/file/d/17o94wln1eCMcYWiaV6sUgssqwuPI0c2s/view?usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer"
           className="bg-blue-500 text-white px-6 py-2 rounded-md font-medium hover:bg-blue-600 transition"
         >
-          Download CV
+          View CV
         </a>
         <a
           href="#contact"
           onClick={(e) => {
             e.preventDefault();
             const target = document.querySelector("#contact");
-            if (target && lenis) {
-              lenis.scrollTo(target, {
-                offset: 0,
-                duration: 1.25, // tweak timing
-                easing: (t) => 1 - Math.pow(1 - t, 3),
-              });
+            if (lenis && target) {
+              lenis.scrollTo(target, { duration: 1.15, easing: t => 1 - Math.pow(1 - t, 3) });
             } else {
-              // fallback
               target?.scrollIntoView({ behavior: "smooth" });
             }
           }}
