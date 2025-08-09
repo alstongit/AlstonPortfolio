@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useLayoutEffect } from "react";
+import React, { useRef, useLayoutEffect } from "react";
 import { FaTwitter, FaGithub, FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import gsap from "gsap";
@@ -15,23 +15,6 @@ const Contact = () => {
   const secRef = useRef(null);
   const linksRef = useRef(null);
   const lineRef = useRef(null);
-  const [showLine, setShowLine] = useState(false);
-
-  useEffect(() => {
-    const el = lineRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShowLine(true);
-          obs.disconnect();
-        }
-      },
-      { threshold: 0.4 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -42,13 +25,12 @@ const Contact = () => {
         ease: "power3.out",
         scrollTrigger: { trigger: secRef.current, start: "top 80%", once: true },
       });
-      gsap.from(".contact-line", {
+      gsap.from(lineRef.current, {
+        opacity: 0,
         scaleX: 0,
         transformOrigin: "left",
-        opacity: 0,
-        duration: 0.6,
-        ease: "power2.out",
-        delay: 0.1,
+        duration: 0.7,
+        ease: "power3.out",
         scrollTrigger: { trigger: secRef.current, start: "top 80%", once: true },
       });
       gsap.from(".contact-links a", {
@@ -71,11 +53,10 @@ const Contact = () => {
         <span className="text-blue-500 text-5xl">Me</span>
       </h2>
 
-      {/* Animated underline */}
+      {/* Blue line (always rendered, GSAP animates) */}
       <div
         ref={lineRef}
-        className={`contact-line h-1 bg-blue-500 mb-6 w-48 transition-all duration-700 ease-out origin-left
-          ${showLine ? "opacity-100" : "opacity-0"}`}
+        className="contact-line h-1 bg-blue-500 mb-6 w-48"
       />
 
       {/* Intro Text */}
