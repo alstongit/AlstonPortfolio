@@ -8,7 +8,7 @@ export const projectsData = [
   {
     title: "LegalEase",
     url: "https://github.com/alstongit/LegalEase",
-    tech: ["React", "Express", "Node.js", "ML", "BERT", "FASTAPI"],
+    tech: ["React", "Express", "Node.js", "ML", "BERT", "FASTAPI", "PyTorch"],
     image: legaleaseImg,
     
   },
@@ -22,7 +22,7 @@ export const projectsData = [
   {
     title: "GeoSentinel",
     url: "https://geo-sentinel.vercel.app/",
-    tech: ["React", "FastAPI", "Tailwind CSS", "ML"],
+    tech: ["React", "FastAPI", "Tailwind CSS", "ML","AWS", "PyTorch", "Three.js", ],
     image: geosentinelImg,
     
   },
