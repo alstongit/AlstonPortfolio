@@ -80,6 +80,7 @@ export default function Hero() {
               { text: "Enthusiast", className: "text-blue-500" },
             ],
             [{ text: "Athlete", className: "text-blue-500" }],
+            [{ text: "Unemployed", className: "text-blue-500" }],
           ]}
           typingSpeed={65}
           deletingSpeed={38}

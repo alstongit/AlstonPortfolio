@@ -21,7 +21,7 @@ export const projectsData = [
   },
   {
     title: "GeoSentinel",
-    url: "https://geo-sentinel.vercel.app/",
+    url: "https://geosentinel.live/",
     tech: ["React", "FastAPI", "Tailwind CSS", "ML","AWS", "PyTorch", "Three.js", ],
     image: geosentinelImg,
     
