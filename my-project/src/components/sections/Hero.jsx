@@ -113,6 +113,15 @@ export default function Hero() {
           Hire Me
         </a>
       </div>
+
+      <script>
+        {`window.addEventListener('error', e => {
+          console.log('[GlobalError]', e.message, e.filename, e.lineno);
+        });
+        window.addEventListener('unhandledrejection', e => {
+          console.log('[PromiseRejection]', e.reason);
+        });`}
+      </script>
     </section>
   );
 }
