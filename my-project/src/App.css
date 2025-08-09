@@ -166,6 +166,6 @@
 @media (max-width: 640px) {
   .animate-scroll-left,
   .animate-scroll-right {
-    animation-duration: 40s; /* slower / less GPU churn */
+    animation-duration: 50s; /* slower */
   }
 }

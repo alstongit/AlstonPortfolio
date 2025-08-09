@@ -1,19 +1,29 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-//import './index.css'
-import App from './App.jsx'
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { StrictMode, useEffect } from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App.jsx";
+import "./App.css";
 import { lenis } from "./lib/lenis";
+import { isMobile, prefersReducedMotion, isLowEndDevice } from "./lib/device";
 
-gsap.registerPlugin(ScrollTrigger);
+const enableScrollAnims =
+  !isMobile() && !prefersReducedMotion() && !isLowEndDevice();
 
-// Keep ScrollTrigger in sync with Lenis
-lenis.on("scroll", ScrollTrigger.update);
-// OPTIONAL if layout changes later: ScrollTrigger.addEventListener("refresh", () => lenis.resize());
+async function initGSAP() {
+  if (!enableScrollAnims) return;
+  const { default: gsap } = await import("gsap");
+  const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+  gsap.registerPlugin(ScrollTrigger);
+  if (lenis) {
+    lenis.on("scroll", ScrollTrigger.update);
+  }
+  // small debounce for refresh after lazy sections mount
+  requestIdleCallback?.(() => ScrollTrigger.refresh());
+}
 
-createRoot(document.getElementById('root')).render(
+initGSAP();
+
+createRoot(document.getElementById("root")).render(
   <StrictMode>
     <App />
-  </StrictMode>,
-)
+  </StrictMode>
+);

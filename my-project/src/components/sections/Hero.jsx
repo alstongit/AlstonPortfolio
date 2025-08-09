@@ -5,16 +5,18 @@ import { useEffect, useState, useRef } from "react";
 import { lenis } from "@/lib/lenis";
 import gsap from "gsap";
 import { useLayoutEffect } from "react";
-import { isMobile, prefersReducedMotion } from "@/lib/device";
+import { isMobile, prefersReducedMotion, isLowEndDevice } from "@/lib/device";
 
 export default function Hero() {
   const heroRef = useRef(null);
   const layers = useRef([]);
   const ctaRef = useRef(null);
   useLayoutEffect(() => {
+    if (isMobile() || prefersReducedMotion() || isLowEndDevice()) return; // skip on mobile
     const ctx = gsap.context(() => {
       const q = gsap.utils.selector(heroRef);
       layers.current = q("[data-parallax]");
+      if (!layers.current.length) return;
       const xSet = layers.current.map((el) => gsap.quickSetter(el, "x", "px"));
       const ySet = layers.current.map((el) => gsap.quickSetter(el, "y", "px"));
       function move(e) {

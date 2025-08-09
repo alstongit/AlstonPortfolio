@@ -4,32 +4,38 @@ import { projectsData } from "@/data/projectsData";
 import { ExternalLink } from "lucide-react";
 import { LampGlow } from "@/components/ui/lamp"; // added
 import { useLayoutEffect, useRef, useEffect } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { isMobile, prefersReducedMotion } from "@/lib/device";
+import { isMobile, prefersReducedMotion, isLowEndDevice } from "@/lib/device";
 
 export default function Projects() {
   const sectionRef = useRef(null);
 
   useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      const cards = gsap.utils.toArray(".project-card");
-      gsap.from(cards, {
-        opacity: 0,
-        y: 60,
-        rotateX: 15,
-        transformOrigin: "top center",
-        duration: 0.8,
-        ease: "power3.out",
-        stagger: 0.15,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 75%",
-          once: true,
-        },
-      });
-    }, sectionRef);
-    return () => ctx.revert();
+    if (isMobile() || prefersReducedMotion() || isLowEndDevice()) return;
+    // (lazy gsap import)
+    let ctx;
+    (async () => {
+      const { default: gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      gsap.registerPlugin(ScrollTrigger);
+      ctx = gsap.context(() => {
+        const cards = gsap.utils.toArray(".project-card");
+        gsap.from(cards, {
+          opacity: 0,
+          y: 60,
+          rotateX: 15,
+          transformOrigin: "top center",
+          duration: 0.8,
+          ease: "power3.out",
+          stagger: 0.15,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 75%",
+            once: true,
+          },
+        });
+      }, sectionRef);
+    })();
+    return () => ctx && ctx.revert();
   }, []);
 
   useEffect(() => {
